@@ -4,8 +4,9 @@ const { check, validationResult } = require("express-validator");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+//const config = require("config");
 const User = require("../../models/Users");
+const secret = process.env.jwtSecret;
 
 //Route to register a new user
 router.post(
@@ -55,7 +56,8 @@ router.post(
       };
       jwt.sign(
         payload,
-        config.get("jwtSecret"),
+        // config.get("jwtSecret"),
+        secret,
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
